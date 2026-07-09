@@ -37,4 +37,4 @@ This research supports the work of Brandon Stafford on organizational transforma
 
 ---
 
-*Last updated: July 2026*
+*Last updated: July 2026
