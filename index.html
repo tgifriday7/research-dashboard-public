@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Five Breakpoints — Research Evidence</title>
+  <meta name="description" content="398 research entries documenting why organizational transformations fail — and the five failure modes that explain it.">
+  <style>
+    --navy:#0F2044;
+    :root {
+      --navy:#0F2044;
+      --navy-mid:#1A3A6B;
+      --navy-light:#2B5499;
+      --teal:#00A896;
+      --teal-light:#02C39A;
+      --gold:#F4A261;
+      --slate:#4A5568;
+      --bg:#F7F9FC;
+      --card:#FFFFFF;
+      --border:#E2E8F0;
+      --text:#1A202C;
+      --muted:#718096;
+      --font:'Segoe UI',system-ui,-apple-system,sans-serif;
+      --r:12px;
+      --sh:0 2px 12px rgba(0,0,0,.08);
+      --sh2:0 6px 24px rgba(0,0,0,.14);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:16px}
+    body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+    header{
+      background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--navy-light) 100%);
+      color:#fff;padding:3rem 2rem 2.5rem;position:relative;overflow:hidden;text-align:center;
+    }
+    header::after{content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.04)}
+    header::before{content:'';position:absolute;right:60px;bottom:-120px;width:200px;height:200px;border-radius:50%;background:rgba(0,168,150,.12)}
+    .badge{
+      background:rgba(0,168,150,.2);border:1px solid rgba(0,168,150,.4);
+      color:var(--teal-light);font-size:.7rem;font-weight:700;letter-spacing:.08em;
+      text-transform:uppercase;padding:.25rem .75rem;border-radius:999px;
+      display:inline-block;margin-bottom:1rem;
+    }
+    header h1{font-size:2.4rem;font-weight:700;letter-spacing:-.03em;line-height:1.1;position:relative}
+    header p.sub{margin-top:.75rem;color:rgba(255,255,255,.7);font-size:1rem;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6;position:relative}
+    .stats{display:flex;justify-content:center;gap:1rem;margin-top:2rem;flex-wrap:wrap;position:relative}
+    .spl{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:.6rem 1.2rem;text-align:center;min-width:110px}
+    .spl .v{font-size:1.6rem;font-weight:700;color:var(--teal-light);line-height:1}
+    .spl .l{font-size:.7rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.07em;margin-top:.2rem}
+    main{flex:1;max-width:860px;margin:0 auto;padding:3rem 2rem;width:100%}
+    .cards{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:3rem}
+    @media(max-width:600px){.cards{grid-template-columns:1fr}}
+    .card{
+      background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+      box-shadow:var(--sh);padding:2rem;text-decoration:none;color:var(--text);
+      display:flex;flex-direction:column;gap:.75rem;transition:box-shadow .2s,transform .15s;
+    }
+    .card:hover{box-shadow:var(--sh2);transform:translateY(-2px)}
+    .card-icon{font-size:2rem;line-height:1}
+    .card-label{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .card h2{font-size:1.15rem;font-weight:700;color:var(--navy);letter-spacing:-.01em}
+    .card p{font-size:.88rem;color:var(--slate);line-height:1.6}
+    .card-cta{
+      display:inline-flex;align-items:center;gap:.4rem;margin-top:auto;
+      font-size:.82rem;font-weight:600;color:var(--teal);
+    }
+    .card-cta::after{content:'→'}
+    .bp-section h2{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:1rem;letter-spacing:-.01em}
+    .bp-list{display:flex;flex-direction:column;gap:.75rem}
+    .bp-item{
+      background:var(--card);border:1px solid var(--border);border-radius:10px;
+      padding:1rem 1.25rem;display:flex;align-items:flex-start;gap:1rem;box-shadow:var(--sh);
+    }
+    .bp-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:.3rem}
+    .bp-sd{background:#E53E3E}
+    .bp-if{background:#805AD5}
+    .bp-pf{background:#2B5499}
+    .bp-ti{background:#00A896}
+    .bp-mm{background:#F4A261}
+    .bp-item strong{font-size:.88rem;font-weight:700;color:var(--navy)}
+    .bp-item span{font-size:.82rem;color:var(--slate)}
+    footer{text-align:center;padding:2rem;color:var(--muted);font-size:.75rem;border-top:1px solid var(--border)}
+    footer a{color:var(--navy-light);text-decoration:none}
+    footer a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge">Research Evidence Base</div>
+    <h1>The Five Breakpoints</h1>
+    <p class="sub">398 research entries documenting why organizational transformations fail — and the five failure modes behind it.</p>
+    <div class="stats">
+      <div class="spl"><div class="v">398</div><div class="l">Entries</div></div>
+      <div class="spl"><div class="v">5</div><div class="l">Breakpoints</div></div>
+      <div class="spl"><div class="v">60+</div><div class="l">Sources</div></div>
+      <div class="spl"><div class="v">2026</div><div class="l">Current</div></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="cards">
+      <a href="phase-2-visual/index.html" class="card">
+        <div class="card-icon">📊</div>
+        <div class="card-label">Visual Analysis</div>
+        <h2>Breakpoint Dashboard</h2>
+        <p>Charts, heatmaps, and breakpoint distribution across the full evidence base. Start here.</p>
+        <span class="card-cta">Explore visuals</span>
+      </a>
+      <a href="phase-1-dashboard/index.html" class="card">
+        <div class="card-icon">🔍</div>
+        <div class="card-label">Evidence Browser</div>
+        <h2>Full Research Index</h2>
+        <p>Search and filter all 398 entries by breakpoint, publisher, credibility, and date.</p>
+        <span class="card-cta">Browse evidence</span>
+      </a>
+    </div>
+
+    <div class="bp-section">
+      <h2>The Five Breakpoints</h2>
+      <div class="bp-list">
+        <div class="bp-item">
+          <div class="bp-dot bp-sd"></div>
+          <div><strong>Strategic Disconnection</strong><br><span>Vague purpose producing the illusion of alignment</span></div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-dot bp-if"></div>
+          <div><strong>Incentive Fragmentation</strong><br><span>Misaligned incentives at the individual or team level</span></div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-dot bp-pf"></div>
+          <div><strong>Process Friction</strong><br><span>Structural friction that blocks execution</span></div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-dot bp-ti"></div>
+          <div><strong>The Technology Illusion</strong><br><span>Deploying technology on top of broken organizational conditions</span></div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-dot bp-mm"></div>
+          <div><strong>The Momentum Mirage</strong><br><span>The appearance of progress without actual movement</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Research supporting <a href="https://workthatholds.com" target="_blank">Work That Holds</a> by Brandon Stafford &nbsp;·&nbsp; Updated July 2026
+  </footer>
+</body>
+</html>
