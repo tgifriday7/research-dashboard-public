@@ -136,11 +136,11 @@
     <div class="fg"><label>Breakpoint</label>
       <select id="f-bp">
         <option value="all">All Breakpoints</option>
+        <option value="strategic_disconnection">Strategic Disconnection</option>
+        <option value="incentive_fragmentation">Incentive Fragmentation</option>
         <option value="process_friction">Process Friction</option>
         <option value="technology_illusion">Technology Illusion</option>
         <option value="momentum_mirage">Momentum Mirage</option>
-        <option value="strategic_disconnection">Strategic Disconnection</option>
-        <option value="incentive_fragmentation">Incentive Fragmentation</option>
       </select>
     </div>
     <div class="fg"><label>Source Category</label>
@@ -234,11 +234,11 @@
 const DATASET = JSON.parse(document.getElementById('ds').textContent);
 
 const BPM = {
+  strategic_disconnection: {label:'Strategic Disconnection', color:'#E53E3E'},
+  incentive_fragmentation: {label:'Incentive Fragmentation', color:'#805AD5'},
   process_friction:        {label:'Process Friction',        color:'#2B5499'},
   technology_illusion:     {label:'Technology Illusion',     color:'#00A896'},
   momentum_mirage:         {label:'Momentum Mirage',         color:'#F4A261'},
-  strategic_disconnection: {label:'Strategic Disconnection', color:'#E53E3E'},
-  incentive_fragmentation: {label:'Incentive Fragmentation', color:'#805AD5'},
 };
 const BPK  = Object.keys(BPM);
 const CATS = ['Consulting','Academic / Research','Business Media'];
