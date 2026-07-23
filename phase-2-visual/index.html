@@ -108,12 +108,12 @@
   <div class="hi">
     <span class="badge">Phase 2 · Visual Intelligence</span>
     <h1>Research Evidence Dashboard</h1>
-    <p>Organizational Transformation · Breakpoint Analysis · 398 Verified Sources</p>
+    <p>Organizational Transformation · Breakpoint Analysis · 398 Research Sources</p>
     <div class="stats">
       <div class="spl"><div class="v" id="s-total">398</div><div class="l">Sources</div></div>
-      <div class="spl"><div class="v" id="s-high">—</div><div class="l">High Credibility</div></div>
+      <div class="spl"><div class="v" id="s-cit">—</div><div class="l">Evidence Citations</div></div>
       <div class="spl"><div class="v">5</div><div class="l">Breakpoints</div></div>
-      <div class="spl"><div class="v">14</div><div class="l">Publishers</div></div>
+      <div class="spl"><div class="v" id="s-pub">—</div><div class="l">Publishers</div></div>
     </div>
   </div>
 </header>
@@ -142,21 +142,6 @@
     <div class="fg"><label>Publisher</label>
       <select id="f-pub">
         <option value="all">All Publishers</option>
-        <option value="McKinsey">McKinsey</option>
-        <option value="HBR">HBR</option>
-        <option value="Gartner">Gartner</option>
-        <option value="Deloitte">Deloitte</option>
-        <option value="MIT Sloan">MIT Sloan</option>
-        <option value="KPMG">KPMG</option>
-        <option value="Forrester">Forrester</option>
-        <option value="Harvard">Harvard</option>
-        <option value="Stanford">Stanford</option>
-        <option value="Bain">Bain</option>
-        <option value="BCG">BCG</option>
-        <option value="Gallup">Gallup</option>
-        <option value="Research">Research/Other</option>
-        <option value="Charter Works">Charter Works</option>
-        <option value="Grant Thornton">Grant Thornton</option>
       </select>
     </div>
     </div>
@@ -178,11 +163,11 @@
     </div>
     <div class="card">
       <div class="ch">
-        <div><div class="ct">Credibility Profile</div><div class="cs">Source quality split across filtered evidence</div></div>
+        <div><div class="ct">Source Category</div><div class="cs">Evidence coverage by publisher type</div></div>
         <span class="ctag">Chart 2</span>
       </div>
-      <div class="cw" style="height:260px"><canvas id="c-cred"></canvas></div>
-      <div id="cred-sum" style="text-align:center;margin-top:.75rem;font-size:.82rem;color:var(--muted)"></div>
+      <div class="cw" style="height:260px"><canvas id="c-cat"></canvas></div>
+      <div id="cat-sum" style="text-align:center;margin-top:.75rem;font-size:.82rem;color:var(--muted)"></div>
     </div>
   </div>
 
@@ -190,7 +175,7 @@
   <div class="gf">
     <div class="card">
       <div class="ch">
-        <div><div class="ct">Field Momentum — Publication Timeline</div><div class="cs">Research velocity: entries logged per date, reveals when evidence clusters emerged</div></div>
+        <div><div class="ct">Evidence Intake Timeline</div><div class="cs">Sources logged per date — shows collection momentum, not publication date</div></div>
         <span class="ctag">Chart 3</span>
       </div>
       <div class="cw" style="height:260px"><canvas id="c-time"></canvas></div>
@@ -242,8 +227,33 @@ const BPM = {
   strategic_disconnection: {label:'Strategic Disconnection', color:'#E53E3E'},
   incentive_fragmentation: {label:'Incentive Fragmentation', color:'#805AD5'},
 };
-const BPK = Object.keys(BPM);
-const CATS = ['Consulting','Academic / Research','Business Media','Other'];
+const BPK  = Object.keys(BPM);
+const CATS = ['Consulting','Academic / Research','Business Media'];
+const CAT_COLORS = {
+  'Consulting':          '#2B5499',
+  'Academic / Research': '#00A896',
+  'Business Media':      '#F4A261',
+};
+
+// ── Populate publisher dropdown from data ────────────────────────────
+(function populatePubs(){
+  const counts = {};
+  DATASET.forEach(e=>{ counts[e.publisher]=(counts[e.publisher]||0)+1; });
+  const sorted = Object.entries(counts)
+    .filter(([p])=> p && p!=='Unknown' && p!=='Research')
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,30);
+  const sel = document.getElementById('f-pub');
+  sorted.forEach(([pub,ct])=>{
+    const o = document.createElement('option');
+    o.value = pub; o.textContent = `${pub} (${ct})`;
+    sel.appendChild(o);
+  });
+  // Also add Research/Other at the bottom
+  const o = document.createElement('option');
+  o.value='Research'; o.textContent='Research / Other';
+  sel.appendChild(o);
+})();
 
 function getF(){
   return {
@@ -270,25 +280,31 @@ function filter(f){
   });
 }
 
-let cDist, cCred, cTime;
+let cDist, cCat, cTime;
 
 function buildAll(){
   const f = getF();
   const entries = filter(f);
+
+  // Header stats
+  const totalCit = entries.reduce((n,e)=>n+e.breakpoints.length, 0);
+  const uniqPubs = new Set(entries.map(e=>e.publisher)).size;
   document.getElementById('s-total').textContent = entries.length;
-  document.getElementById('s-high').textContent  = entries.filter(e=>e.credibility==='high').length;
+  document.getElementById('s-cit').textContent   = totalCit;
+  document.getElementById('s-pub').textContent   = uniqPubs;
+
   buildDist(entries, f);
-  buildCred(entries);
+  buildCat(entries);
   buildTimeline(entries);
   buildHeatmap(entries, f);
 }
 
-// ── Chart 1: Breakpoint Distribution ──────────────────────────────────
+// ── Chart 1: Breakpoint Distribution ────────────────────────────────
 function buildDist(entries, f){
   const counts = {};
   BPK.forEach(k=>counts[k]=0);
   entries.forEach(e=>e.breakpoints.forEach(b=>{
-    if((f.bp==='all'||b.name===f.bp) && counts[b.name]!==undefined) counts[b.name]++;
+    if(counts[b.name]!==undefined) counts[b.name]++;
   }));
   const labels = BPK.map(k=>BPM[k].label);
   const data   = BPK.map(k=>counts[k]);
@@ -297,7 +313,7 @@ function buildDist(entries, f){
   cDist = new Chart(document.getElementById('c-dist'),{
     type:'bar',
     data:{labels,datasets:[{
-      label:'Evidence Entries',data,
+      label:'Evidence Citations',data,
       backgroundColor:colors.map(c=>c+'CC'),borderColor:colors,
       borderWidth:2,borderRadius:6,borderSkipped:false
     }]},
@@ -305,11 +321,11 @@ function buildDist(entries, f){
       indexAxis:'y',responsive:true,maintainAspectRatio:false,
       plugins:{
         legend:{display:false},
-        tooltip:{callbacks:{label:ctx=>` ${ctx.raw} entries`}}
+        tooltip:{callbacks:{label:ctx=>` ${ctx.raw} citations`}}
       },
       scales:{
         x:{beginAtZero:true,grid:{color:'#E2E8F033'},ticks:{font:{size:11}},
-           title:{display:true,text:'Evidence Count',font:{size:11},color:'#718096'}},
+           title:{display:true,text:'Evidence Citations',font:{size:11},color:'#718096'}},
         y:{grid:{display:false},ticks:{font:{size:12,weight:'600'}}}
       }
     }
@@ -320,50 +336,70 @@ function buildDist(entries, f){
   ).join('');
 }
 
-// ── Chart 2: Credibility Donut ─────────────────────────────────────────
-function buildCred(entries){
-  const h = entries.filter(e=>e.credibility==='high').length;
-  const m = entries.filter(e=>e.credibility==='moderate').length;
-  const t = entries.length || 1;
-  if(cCred) cCred.destroy();
-  cCred = new Chart(document.getElementById('c-cred'),{
-    type:'doughnut',
-    data:{
-      labels:['High Credibility','Moderate Credibility'],
-      datasets:[{data:[h,m],
-        backgroundColor:['#00A896CC','#F4A261CC'],
-        borderColor:['#00A896','#F4A261'],
-        borderWidth:2,hoverOffset:8
-      }]
-    },
+// ── Chart 2: Source Category breakdown ──────────────────────────────
+function buildCat(entries){
+  const counts = {Consulting:0,'Academic / Research':0,'Business Media':0,Other:0};
+  entries.forEach(e=>{
+    const k = counts[e.category]!==undefined ? e.category : 'Other';
+    counts[k]++;
+  });
+  const labels = ['Consulting','Academic / Research','Business Media','Other'].filter(k=>counts[k]>0);
+  const data   = labels.map(k=>counts[k]);
+  const colors = labels.map(k=>CAT_COLORS[k]||'#94a3b8');
+  if(cCat) cCat.destroy();
+  cCat = new Chart(document.getElementById('c-cat'),{
+    type:'bar',
+    data:{labels,datasets:[{
+      label:'Sources',data,
+      backgroundColor:colors.map(c=>c+'CC'),borderColor:colors,
+      borderWidth:2,borderRadius:6,borderSkipped:false
+    }]},
     options:{
-      responsive:true,maintainAspectRatio:false,cutout:'65%',
+      responsive:true,maintainAspectRatio:false,
       plugins:{
-        legend:{position:'bottom',labels:{font:{size:12},padding:16,usePointStyle:true,pointStyleWidth:10}},
-        tooltip:{callbacks:{label:ctx=>` ${ctx.raw} entries (${Math.round(ctx.raw/t*100)}%)`}}
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>{
+          const pct=Math.round(ctx.raw/entries.length*100);
+          return ` ${ctx.raw} sources (${pct}%)`;
+        }}}
+      },
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:11}}},
+        y:{beginAtZero:true,grid:{color:'#E2E8F033'},ticks:{font:{size:11}},
+           title:{display:true,text:'Sources',font:{size:11},color:'#718096'}}
       }
     }
   });
-  document.getElementById('cred-sum').innerHTML =
-    `<strong>${Math.round(h/t*100)}%</strong> of filtered evidence rated <span style="color:#00A896;font-weight:700">High Credibility</span>`;
+  const t=entries.length||1;
+  document.getElementById('cat-sum').innerHTML =
+    labels.map((l,i)=>`<span style="color:${colors[i]};font-weight:600">${l}: ${data[i]} (${Math.round(data[i]/t*100)}%)</span>`).join(' &nbsp;·&nbsp; ');
 }
 
-// ── Chart 3: Timeline ─────────────────────────────────────────────────
+// ── Chart 3: Evidence Intake Timeline ───────────────────────────────
 function buildTimeline(entries){
-  const dc = {};
-  entries.forEach(e=>{if(e.date) dc[e.date]=(dc[e.date]||0)+1});
-  const dates = Object.keys(dc).sort();
-  const data  = dates.map(d=>dc[d]);
+  // Group by week (Monday) to reduce July spike
+  const wk = {};
+  entries.forEach(e=>{
+    if(!e.date) return;
+    const d = new Date(e.date);
+    const day = d.getDay(); // 0=Sun
+    const diff = (day===0?-6:1-day);
+    d.setDate(d.getDate()+diff);
+    const key = d.toISOString().slice(0,10);
+    wk[key]=(wk[key]||0)+1;
+  });
+  const weeks = Object.keys(wk).sort();
+  const data  = weeks.map(w=>wk[w]);
   if(cTime) cTime.destroy();
-  if(!dates.length){
-    const cv = document.getElementById('c-time');
-    cv.parentElement.innerHTML='<div class="nd">No dated entries match current filters.</div>';
+  if(!weeks.length){
+    document.getElementById('c-time').parentElement.innerHTML=
+      '<div class="nd">No dated entries match current filters.</div>';
     return;
   }
   cTime = new Chart(document.getElementById('c-time'),{
     type:'bar',
-    data:{labels:dates,datasets:[{
-      label:'Entries',data,
+    data:{labels:weeks,datasets:[{
+      label:'Sources logged',data,
       backgroundColor:'#2B549999',borderColor:'#2B5499',
       borderWidth:1.5,borderRadius:4,borderSkipped:false
     }]},
@@ -372,14 +408,14 @@ function buildTimeline(entries){
       plugins:{
         legend:{display:false},
         tooltip:{callbacks:{
-          title:ctx=>`Date: ${ctx[0].label}`,
-          label:ctx=>` ${ctx.raw} entries`
+          title:ctx=>`Week of ${ctx[0].label}`,
+          label:ctx=>` ${ctx.raw} sources logged`
         }}
       },
       scales:{
-        x:{grid:{display:false},ticks:{font:{size:10},maxRotation:45,maxTicksLimit:14}},
+        x:{grid:{display:false},ticks:{font:{size:10},maxRotation:45,maxTicksLimit:12}},
         y:{beginAtZero:true,grid:{color:'#E2E8F033'},ticks:{font:{size:11},stepSize:1},
-           title:{display:true,text:'Entries',font:{size:11},color:'#718096'}}
+           title:{display:true,text:'Sources logged',font:{size:11},color:'#718096'}}
       }
     }
   });
@@ -387,30 +423,26 @@ function buildTimeline(entries){
 
 // ── Chart 4: Heatmap ─────────────────────────────────────────────────
 function buildHeatmap(entries, f){
-  // Aggregate per category+bp+credibility
   const hm = {};
   CATS.forEach(cat=>{hm[cat]={};BPK.forEach(k=>{hm[cat][k]={high:0,moderate:0}})});
   entries.forEach(e=>{
-    const cat = e.category in hm ? e.category : 'Other';
+    const cat = CATS.includes(e.category) ? e.category : 'Other';
+    if(!hm[cat]) return;
     e.breakpoints.forEach(b=>{
       if(BPK.includes(b.name)){
-        hm[cat][b.name][e.credibility]==(undefined)?0:0; // init
         hm[cat][b.name][e.credibility]=(hm[cat][b.name][e.credibility]||0)+1;
       }
     });
   });
-  // Find max total for scaling
   let maxVal = 1;
   CATS.forEach(cat=>BPK.forEach(k=>{
     const t=(hm[cat][k].high||0)+(hm[cat][k].moderate||0);
     if(t>maxVal) maxVal=t;
   }));
-  // Build rows — skip "Other" if empty
   const body = document.getElementById('hm-body');
   body.innerHTML='';
-  CATS.filter(cat=>cat!=='Other').forEach(cat=>{
+  CATS.forEach(cat=>{
     const tr = document.createElement('tr');
-    // Category label cell
     const td0 = document.createElement('td');
     td0.innerHTML=`<span class="cat-lbl">${cat}</span>`;
     tr.appendChild(td0);
@@ -418,13 +450,13 @@ function buildHeatmap(entries, f){
       const h=(hm[cat][k].high||0);
       const m=(hm[cat][k].moderate||0);
       const tot=h+m;
-      const pctH = Math.round((h/maxVal)*200); // max 200px
-      const pctM = Math.round((m/maxVal)*200);
-      const td = document.createElement('td');
+      const pctH=Math.round((h/maxVal)*180);
+      const pctM=Math.round((m/maxVal)*180);
+      const td=document.createElement('td');
       td.innerHTML=`
         <div style="display:flex;flex-direction:column;gap:3px">
-          ${h>0?`<div class="hm-bar" style="width:${pctH}px;background:#00A896">${h>0?h:''}</div>`:''}
-          ${m>0?`<div class="hm-bar" style="width:${pctM}px;background:#F4A261">${m>0?m:''}</div>`:''}
+          ${h>0?`<div class="hm-bar" style="width:${pctH}px;background:#00A896" title="High: ${h}">${h}</div>`:''}
+          ${m>0?`<div class="hm-bar" style="width:${pctM}px;background:#F4A261" title="Moderate: ${m}">${m}</div>`:''}
           ${tot===0?'<span style="color:#CBD5E0;font-size:.7rem">—</span>':''}
         </div>`;
       tr.appendChild(td);
@@ -433,16 +465,13 @@ function buildHeatmap(entries, f){
   });
 }
 
-// ── Event listeners ───────────────────────────────────────────────────
+// ── Events ────────────────────────────────────────────────────────────
 ['f-bp','f-cred','f-pub','f-from','f-to'].forEach(id=>{
   document.getElementById(id).addEventListener('change', buildAll);
 });
 document.getElementById('btn-r').addEventListener('click',()=>{
-  document.getElementById('f-bp').value   = 'all';
-  document.getElementById('f-cred').value = 'all';
-  document.getElementById('f-pub').value  = 'all';
-  document.getElementById('f-from').value = '';
-  document.getElementById('f-to').value   = '';
+  ['f-bp','f-cred','f-pub'].forEach(id=>document.getElementById(id).value='all');
+  ['f-from','f-to'].forEach(id=>document.getElementById(id).value='');
   buildAll();
 });
 
