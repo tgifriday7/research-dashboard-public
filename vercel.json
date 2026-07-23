@@ -1,5 +1,5 @@
 {
   "redirects": [
-    { "source": "/", "destination": "/phase-2-visual/", "permanent": false }
+    { "source": "/", "destination": "/visual/", "permanent": false }
   ]
 }
