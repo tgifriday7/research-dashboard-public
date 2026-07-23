@@ -106,8 +106,9 @@
 
 <header>
   <div class="hi">
+    <span class="badge">Visual Intelligence</span>
     <h1>Why Change Fails</h1>
-    <p>Breakpoint Analysis · Evidence Intelligence · 398 Research Sources</p>
+    <p>Breakpoint Analysis · Evidence Intelligence</p>
     <div class="stats">
       <div class="spl"><div class="v">5</div><div class="l">Breakpoints</div></div>
       <div class="spl"><div class="v" id="s-pub">—</div><div class="l">Publishers</div></div>
@@ -119,7 +120,9 @@
 
 <main class="page">
 
-  <div style="text-align:right;padding:.5rem 0 .25rem;font-size:.8rem"><a href="../phase-1-dashboard/" style="color:var(--muted);text-decoration:none">← Research Index (full list)</a></div>
+  <div style="display:flex;justify-content:flex-end;padding:.75rem 0 .25rem">
+    <a href="../phase-1-dashboard/" style="display:inline-flex;align-items:center;gap:.4rem;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:.35rem .9rem;font-size:.8rem;font-weight:600;color:var(--slate);text-decoration:none;box-shadow:var(--sh)" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.14)'" onmouseout="this.style.boxShadow='var(--sh)'">&#8592; Research Index</a>
+  </div>
 
   <!-- Filter Bar -->
   <div class="fb">
@@ -187,8 +190,8 @@
   <div class="gf">
     <div class="card">
       <div class="ch">
-        <div><div class="ct">Source × Breakpoint Credibility Heatmap</div><div class="cs">Evidence strength by publisher category — bar width = citation count, color = confidence tier</div></div>
-        <span class="ctag">Chart 4 · Heatmap</span>
+        <div><div class="ct">Source Category × Breakpoint</div><div class="cs">Evidence citations per category per breakpoint — bar width = citation count</div></div>
+        <span class="ctag">Heatmap</span>
       </div>
       <div class="hmc">
         <table class="hmt">
@@ -206,9 +209,10 @@
         </table>
       </div>
       <div class="leg" style="margin-top:1rem">
-        <div class="li"><span class="conf-dot ch-dot"></span><span>High Credibility (peer-reviewed / primary data)</span></div>
-        <div class="li"><span class="conf-dot cm-dot"></span><span>Moderate Credibility (industry reports / practitioner research)</span></div>
-        <div class="li" style="margin-left:auto;font-size:.72rem;color:var(--muted)">Bar width ∝ evidence count within category</div>
+        <div class="li"><span class="ls" style="background:#2B5499"></span>Consulting</div>
+        <div class="li"><span class="ls" style="background:#00A896"></span>Academic / Research</div>
+        <div class="li"><span class="ls" style="background:#F4A261"></span>Business Media</div>
+        <div class="li" style="margin-left:auto;font-size:.72rem;color:var(--muted)">Bar width ∝ citation count</div>
       </div>
     </div>
   </div>
@@ -433,41 +437,31 @@ function buildTimeline(entries){
 // ── Chart 4: Heatmap ─────────────────────────────────────────────────
 function buildHeatmap(entries, f){
   const hm = {};
-  CATS.forEach(cat=>{hm[cat]={};BPK.forEach(k=>{hm[cat][k]={high:0,moderate:0}})});
+  CATS.forEach(cat=>{hm[cat]={};BPK.forEach(k=>{hm[cat][k]=0})});
   entries.forEach(e=>{
-    const cat = CATS.includes(e.category) ? e.category : 'Other';
-    if(!hm[cat]) return;
+    const cat = CATS.includes(e.category) ? e.category : null;
+    if(!cat) return;
     e.breakpoints.forEach(b=>{
-      if(BPK.includes(b.name)){
-        hm[cat][b.name][e.credibility]=(hm[cat][b.name][e.credibility]||0)+1;
-      }
+      if(BPK.includes(b.name)) hm[cat][b.name]++;
     });
   });
   let maxVal = 1;
-  CATS.forEach(cat=>BPK.forEach(k=>{
-    const t=(hm[cat][k].high||0)+(hm[cat][k].moderate||0);
-    if(t>maxVal) maxVal=t;
-  }));
+  CATS.forEach(cat=>BPK.forEach(k=>{if(hm[cat][k]>maxVal) maxVal=hm[cat][k]}));
   const body = document.getElementById('hm-body');
   body.innerHTML='';
   CATS.forEach(cat=>{
+    const color = CAT_COLORS[cat]||'#94a3b8';
     const tr = document.createElement('tr');
     const td0 = document.createElement('td');
-    td0.innerHTML=`<span class="cat-lbl">${cat}</span>`;
+    td0.innerHTML=`<span class="cat-lbl" style="border-left:3px solid ${color};padding-left:6px">${cat}</span>`;
     tr.appendChild(td0);
     BPK.forEach(k=>{
-      const h=(hm[cat][k].high||0);
-      const m=(hm[cat][k].moderate||0);
-      const tot=h+m;
-      const pctH=Math.round((h/maxVal)*180);
-      const pctM=Math.round((m/maxVal)*180);
+      const tot=hm[cat][k];
+      const pct=Math.round((tot/maxVal)*180);
       const td=document.createElement('td');
-      td.innerHTML=`
-        <div style="display:flex;flex-direction:column;gap:3px">
-          ${h>0?`<div class="hm-bar" style="width:${pctH}px;background:#00A896" title="High: ${h}">${h}</div>`:''}
-          ${m>0?`<div class="hm-bar" style="width:${pctM}px;background:#F4A261" title="Moderate: ${m}">${m}</div>`:''}
-          ${tot===0?'<span style="color:#CBD5E0;font-size:.7rem">—</span>':''}
-        </div>`;
+      td.innerHTML=tot>0
+        ?`<div class="hm-bar" style="width:${pct}px;background:${color}" title="${tot} citations">${tot}</div>`
+        :`<span style="color:#CBD5E0;font-size:.7rem">—</span>`;
       tr.appendChild(td);
     });
     body.appendChild(tr);
