@@ -182,7 +182,7 @@
   <div class="gf">
     <div class="card">
       <div class="ch">
-        <div><div class="ct">Publication Timeline</div><div class="cs">Sources by publication month · where dated</div></div>
+        <div><div class="ct">Research Collection Timeline</div><div class="cs">Sources by month entered into evidence base · Apr–Jul 2026 sweep</div></div>
         <span class="ctag">Timeline</span>
       </div>
       <div class="cw" style="height:260px"><canvas id="c-time"></canvas></div>
@@ -387,13 +387,14 @@ function buildCat(entries){
 function buildTimeline(entries){
   const mo = {};
   entries.forEach(e=>{
-    // pub_date=2026-07-xx means batch-ingest stamp (not real pub date); fall back to entry date
-    const raw = e.pub_date && !e.pub_date.startsWith('2026-07') ? e.pub_date : e.date;
+    // Use collection date (entry ID date) — real chronological signal (April–July research sweep)
+    // pub_date is unreliable: 317/398 were batch-stamped 2026-07-08 during ingest
+    const raw = e.date;
     if(!raw) return;
     const key = raw.slice(0,7); // YYYY-MM
     mo[key]=(mo[key]||0)+1;
   });
-  const dated  = entries.filter(e=>e.pub_date && !e.pub_date.startsWith('2026-07')).length;
+  const dated = entries.filter(e=>e.date).length;
   const months = Object.keys(mo).sort();
   const data   = months.map(m=>mo[m]);
   const total  = entries.length;
@@ -424,8 +425,8 @@ function buildTimeline(entries){
           label:ctx=>` ${ctx.raw} sources published`
         }},
         title:{
-          display: dated<total,
-          text:`Publication dates shown; Jul 2026 entries use collection date`,
+          display: true,
+          text:`Research collection timeline — when each source entered the evidence base (Apr–Jul 2026)`,
           font:{size:11},color:'#718096',padding:{bottom:8}
         }
       },
