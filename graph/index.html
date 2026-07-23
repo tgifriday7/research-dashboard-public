@@ -6,101 +6,53 @@
 <title>Relationship Graph – Why Change Fails</title>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 <style>
-  :root {
-    --navy: #0F2044;
-    --navy-mid: #1A3A6B;
-    --navy-light: #2B5499;
-    --teal: #00A896;
-    --gold: #F4A261;
+  /* ── Design system ── */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --navy:#0F2044;--navy-mid:#1A3A6B;--navy-light:#2B5499;
+    --teal:#00A896;--teal-light:#02C39A;--gold:#F4A261;
+    --font:'Segoe UI',system-ui,-apple-system,sans-serif;
+    --r:12px;--sh:0 2px 12px rgba(0,0,0,.08)
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0a1628; color: #e0e8f5; font-family: 'Segoe UI', system-ui, sans-serif; overflow: hidden; }
+  html,body{height:100%;overflow:hidden}
+  body{background:#0a1628;color:#e0e8f5;font-family:var(--font);display:flex;flex-direction:column}
 
   /* HEADER */
-  #header {
-    background: var(--navy);
-    border-bottom: 1px solid #2B5499;
-    padding: 10px 20px 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  #header-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  #header h1 { font-size: 1.25rem; font-weight: 700; color: #fff; }
-  #header .subtitle { font-size: 0.78rem; color: #8ba6cc; }
-  .nav-pills { display: flex; gap: 8px; }
-  .pill {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 999px;
-    background: rgba(43,84,153,0.4);
-    color: #a8c8f0;
-    text-decoration: none;
-    font-size: 0.72rem;
-    border: 1px solid rgba(43,84,153,0.6);
-    transition: background 0.2s;
-  }
-  .pill:hover { background: rgba(43,84,153,0.8); color: #fff; }
+  header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--navy-light) 100%);color:#fff;padding:1.5rem 2rem 0;position:relative;overflow:hidden;flex-shrink:0}
+  header::after{content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+  .hi{max-width:1280px;margin:0 auto;position:relative;z-index:1}
+  .badge{background:rgba(0,168,150,.2);border:1px solid rgba(0,168,150,.4);color:var(--teal-light);font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .75rem;border-radius:999px;display:inline-block;margin-bottom:.6rem}
+  header h1{font-size:1.6rem;font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#fff}
+  header p{margin-top:.35rem;color:rgba(255,255,255,.7);font-size:.88rem}
+  .nav-pills{margin-top:.75rem;padding-bottom:1rem;display:flex;gap:.75rem;flex-wrap:wrap}
+  .nav-pill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.35);border-radius:20px;padding:.3rem .9rem;font-size:.8rem;font-weight:600;color:#fff;text-decoration:none}
+  .nav-pill:hover{background:rgba(255,255,255,.25)}
 
-  /* CONTROLS */
-  #controls {
-    background: rgba(15,32,68,0.95);
-    border-bottom: 1px solid #1e3a5f;
-    padding: 6px 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  #controls label { font-size: 0.75rem; color: #8ba6cc; }
-  #controls select {
-    background: var(--navy-mid);
-    color: #e0e8f5;
-    border: 1px solid #2B5499;
-    border-radius: 6px;
-    padding: 3px 8px;
-    font-size: 0.75rem;
-    cursor: pointer;
-  }
-  #reset-btn {
-    padding: 4px 14px;
-    background: rgba(43,84,153,0.5);
-    color: #a8c8f0;
-    border: 1px solid #2B5499;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    cursor: pointer;
-  }
-  #reset-btn:hover { background: #2B5499; color: #fff; }
+  /* LEGEND STRIP */
+  .legend-strip{background:#0a1a35;border-bottom:1px solid rgba(255,255,255,.1);padding:.65rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;flex-shrink:0}
+  .leg-group{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+  .leg-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.45);margin-right:.25rem}
+  .leg-item{display:flex;align-items:center;gap:.35rem;font-size:.75rem;color:rgba(255,255,255,.75)}
+  .leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .leg-divider{width:1px;height:32px;background:rgba(255,255,255,.15);flex-shrink:0}
+  .leg-hint{margin-left:auto;font-size:.7rem;color:rgba(255,255,255,.35);font-style:italic}
 
-  /* LEGEND */
-  #legend {
-    background: rgba(15,32,68,0.9);
-    border-bottom: 1px solid #1e3a5f;
-    padding: 6px 20px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
-  }
-  .legend-group { display: flex; align-items: center; gap: 10px; }
-  .legend-sep { width: 1px; height: 18px; background: #2B5499; margin: 0 4px; }
-  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.7rem; color: #8ba6cc; }
-  .swatch { display: inline-block; border-radius: 50%; flex-shrink: 0; }
-  .swatch.bp { width: 12px; height: 12px; }
-  .swatch.cat { width: 8px; height: 8px; }
+  /* FILTER BAR */
+  .graph-filters{background:#0d1f3c;border-bottom:1px solid rgba(255,255,255,.08);padding:.6rem 2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;flex-shrink:0}
+  .graph-filters label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.5)}
+  .graph-filters select{font-family:var(--font);font-size:.82rem;background:#1a2f55;border:1px solid rgba(255,255,255,.2);border-radius:8px;color:#fff;padding:.35rem .7rem;cursor:pointer}
+  .graph-filters select:focus{outline:none;border-color:var(--teal)}
+  .graph-filters .btn-reset{font-family:var(--font);font-size:.75rem;font-weight:600;padding:.35rem .85rem;background:transparent;border:1px solid rgba(255,255,255,.25);border-radius:8px;color:rgba(255,255,255,.7);cursor:pointer;margin-left:auto}
+  .graph-filters .btn-reset:hover{border-color:var(--teal);color:var(--teal-light)}
+
+  /* FOOTER */
+  .graph-footer{background:#0F2044;color:rgba(255,255,255,.35);font-size:.72rem;text-align:center;padding:.6rem;flex-shrink:0}
 
   /* GRAPH */
   #graph-container {
     position: relative;
     width: 100%;
-    height: calc(100vh - var(--header-total-height, 130px));
+    flex:1;min-height:0;
   }
   svg#graph {
     width: 100%;
@@ -130,20 +82,38 @@
 </head>
 <body>
 
-<div id="header">
-  <div id="header-top">
-    <div>
-      <h1>Why Change Fails</h1>
-      <div class="subtitle">Relationship Graph &middot; Sources &rarr; Breakpoints</div>
-    </div>
-    <div class="nav-pills">
-      <a class="pill" href="../phase-2-visual/">&larr; Visual Intelligence Dashboard</a>
-      <a class="pill" href="../phase-1-dashboard/">Research Index</a>
-    </div>
+<header>
+  <div class="hi">
+    <span class="badge">Relationship Graph</span>
+    <h1>Why Change Fails</h1>
+    <p>Sources → Breakpoints · 398 Sources · 1,411 Evidence Links</p>
+    <nav class="nav-pills">
+      <a class="nav-pill" href="../phase-2-visual/">← Visual Intelligence Dashboard</a>
+      <a class="nav-pill" href="../phase-1-dashboard/">Research Index</a>
+    </nav>
   </div>
+</header>
+
+<div class="legend-strip">
+  <div class="leg-group">
+    <span class="leg-label">Breakpoints</span>
+    <div class="leg-item"><span class="leg-dot" style="background:#E53E3E"></span>Strategic Disconnection</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#805AD5"></span>Incentive Fragmentation</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#2B5499"></span>Process Friction</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#00A896"></span>Technology Illusion</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#F4A261"></span>Momentum Mirage</div>
+  </div>
+  <div class="leg-divider"></div>
+  <div class="leg-group">
+    <span class="leg-label">Source Categories</span>
+    <div class="leg-item"><span class="leg-dot" style="background:#2B5499"></span>Consulting</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#00A896"></span>Academic / Research</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#F4A261"></span>Business Media</div>
+  </div>
+  <div class="leg-hint">Hover nodes to highlight connections · Scroll to zoom · Drag to pan</div>
 </div>
 
-<div id="controls">
+<div class="graph-filters">
   <label for="bp-filter">Breakpoint:</label>
   <select id="bp-filter">
     <option value="">All Breakpoints</option>
@@ -160,24 +130,8 @@
     <option value="Academic / Research">Academic / Research</option>
     <option value="Business Media">Business Media</option>
   </select>
-  <button id="reset-btn">Reset</button>
+  <button id="reset-btn" class="btn-reset">Reset</button>
   <span id="status-label" style="font-size:0.7rem;color:#6b91c1;margin-left:4px;"></span>
-</div>
-
-<div id="legend">
-  <div class="legend-group">
-    <div class="legend-item"><span class="swatch bp" style="background:#E53E3E"></span>Strategic Disconnection</div>
-    <div class="legend-item"><span class="swatch bp" style="background:#805AD5"></span>Incentive Fragmentation</div>
-    <div class="legend-item"><span class="swatch bp" style="background:#2B5499"></span>Process Friction</div>
-    <div class="legend-item"><span class="swatch bp" style="background:#00A896"></span>Technology Illusion</div>
-    <div class="legend-item"><span class="swatch bp" style="background:#F4A261"></span>Momentum Mirage</div>
-  </div>
-  <div class="legend-sep"></div>
-  <div class="legend-group">
-    <div class="legend-item"><span class="swatch cat" style="background:#2B5499"></span>Consulting</div>
-    <div class="legend-item"><span class="swatch cat" style="background:#00A896"></span>Academic / Research</div>
-    <div class="legend-item"><span class="swatch cat" style="background:#F4A261"></span>Business Media</div>
-  </div>
 </div>
 
 <div id="graph-container">
@@ -587,5 +541,8 @@
 
 })();
 </script>
+
+<footer class="graph-footer">Why Change Fails · Relationship Graph · 398 Sources · 1,411 Evidence Links</footer>
+
 </body>
 </html>
