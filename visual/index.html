@@ -88,8 +88,9 @@
     .cm-dot{background:var(--gold)}
     /* Legend */
     .leg{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem}
-    .li{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--slate)}
+    .li{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--text)}
     .ls{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+    .lc{width:14px;height:14px;border-radius:3px;flex-shrink:0;display:inline-block}
     /* no-data */
     .nd{text-align:center;padding:2rem;color:var(--muted);font-size:.9rem}
     /* footer */
@@ -271,10 +272,10 @@
         </table>
       </div>
       <div class="leg" style="margin-top:1rem">
-        <div class="li"><span class="lc" style="background:#E53E3E"></span>Purpose</div>
-        <div class="li"><span class="lc" style="background:#805AD5"></span>Commitment</div>
-        <div class="li"><span class="lc" style="background:#00A896"></span>Capability</div>
-        <div class="li"><span class="lc" style="background:#F4A261"></span>Momentum</div>
+        <div class="li"><span class="lc" style="background:#E53E3E;width:14px;height:14px;border-radius:3px;display:inline-block;flex-shrink:0"></span>Purpose</div>
+        <div class="li"><span class="lc" style="background:#805AD5;width:14px;height:14px;border-radius:3px;display:inline-block;flex-shrink:0"></span>Commitment</div>
+        <div class="li"><span class="lc" style="background:#00A896;width:14px;height:14px;border-radius:3px;display:inline-block;flex-shrink:0"></span>Capability</div>
+        <div class="li"><span class="lc" style="background:#F4A261;width:14px;height:14px;border-radius:3px;display:inline-block;flex-shrink:0"></span>Momentum</div>
         <div class="li" style="margin-left:auto;font-size:.72rem;color:var(--muted)">Bar width ∝ co-occurrence count</div>
       </div>
     </div>
@@ -298,10 +299,10 @@ const BPM = {
 };
 const BPK  = Object.keys(BPM);
 const FORCES = [
-  {name:'Purpose',    color:'#E53E3E', icon:'🎯'},
-  {name:'Commitment', color:'#805AD5', icon:'🤝'},
-  {name:'Capability', color:'#00A896', icon:'⚙️'},
-  {name:'Momentum',   color:'#F4A261', icon:'🚀'},
+  {name:'Purpose',    color:'#E53E3E'},
+  {name:'Commitment', color:'#805AD5'},
+  {name:'Capability', color:'#00A896'},
+  {name:'Momentum',   color:'#F4A261'},
 ];
 const CATS = ['Consulting','Academic / Research','Business Media'];
 const CAT_COLORS = {
@@ -409,8 +410,8 @@ function buildForces(entries){
       indexAxis:'y',
       plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.raw+' sources'}}},
       scales:{
-        x:{grid:{color:'rgba(255,255,255,.07)'},ticks:{color:'#94a3b8'},beginAtZero:true},
-        y:{grid:{display:false},ticks:{color:'#e2e8f0',font:{size:13,weight:'600'}}}
+        x:{grid:{color:'rgba(0,0,0,.06)'},ticks:{color:'#4A5568'},beginAtZero:true},
+        y:{grid:{display:false},ticks:{color:'#1A202C',font:{size:13,weight:'600'}}}
       },
       maintainAspectRatio:false
     }
@@ -438,7 +439,7 @@ function buildForcesHeatmap(entries){
   FORCES.forEach(fo=>{
     const tr = document.createElement('tr');
     const td0 = document.createElement('td');
-    td0.innerHTML=`<span class="cat-lbl" style="border-left:3px solid ${fo.color};padding-left:6px;color:var(--text)">${fo.icon} ${fo.name}</span>`;
+    td0.innerHTML=`<span class="cat-lbl" style="border-left:3px solid ${fo.color};padding-left:6px;color:var(--text);font-weight:700">${fo.name}</span>`;
     tr.appendChild(td0);
     BPK.forEach(k=>{
       const v = hm[fo.name][k];
