@@ -282,9 +282,9 @@ function filter(f){
   return DATASET.filter(e=>{
     if(f.cat!=='all' && e.category!==f.cat) return false;
     if(f.pub!=='all' && e.publisher!==f.pub) return false;
-    if(e.date){
-      if(f.from && e.date < f.from) return false;
-      if(f.to   && e.date > f.to)   return false;
+    if(e.pub_date){
+      if(f.from && e.pub_date < f.from) return false;
+      if(f.to   && e.pub_date > f.to)   return false;
     }
     if(f.bp!=='all'){
       if(!e.breakpoints.some(b=>b.name===f.bp)) return false;
