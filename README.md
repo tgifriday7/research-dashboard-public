@@ -1,40 +1,26 @@
 # Research Evidence Dashboards
 
-Evidence-based research on organizational transformation, AI-native org design, and the Five Breakpoints framework.
+Evidence-based research on organizational transformation failure, AI-era org design, and the **Five Breakpoints** framework — nearly 800 curated entries from consulting research, academic studies, and practitioner sources.
 
-## What's Here
+**Live site:** [research.workthatholds.com](https://research.workthatholds.com)
 
-**Phase 1: Filterable Knowledge Base** (`phase-1-dashboard/index.html`)
-- Search and filter 198 research entries across 5 organizational failure modes
-- Full citations, credibility ratings, publication dates
-- Read the raw findings that underpin the Five Breakpoints thesis
+| Page | What it shows |
+|---|---|
+| [/visual/](https://research.workthatholds.com/visual/) | Visual Intelligence Dashboard — the evidence base at a glance |
+| [/research-index/](https://research.workthatholds.com/research-index/) | Filterable research index — search by breakpoint, credibility, keyword |
+| [/breakpoints-graph/](https://research.workthatholds.com/breakpoints-graph/) | Evidence graph across the five failure modes |
+| [/forces-graph/](https://research.workthatholds.com/forces-graph/) | Sources mapped to the Four Forces mechanism layer |
 
-**Phase 2: Visual Analysis** (`phase-2-visual/index.html`)
-- Breakpoint distribution across the evidence base
-- Credibility assessment by source category
-- Timeline showing when evidence was published
-- Interactive heatmap of breakpoint × credibility convergence
-- Filter across all visualizations in real-time
+## The Five Breakpoints
 
-## The Five Breakpoints Framework
+1. **Strategic Disconnection** — vague purpose producing the illusion of alignment
+2. **Incentive Fragmentation** — misaligned incentives at the individual or team level
+3. **Process Friction** — structural friction that blocks execution
+4. **The Technology Illusion** — deploying technology on top of broken organizational conditions
+5. **The Momentum Mirage** — the appearance of progress without actual movement
 
-1. **Strategic Disconnection** — Vague purpose producing the illusion of alignment
-2. **Incentive Fragmentation** — Misaligned incentives at the individual or team level
-3. **Process Friction** — Structural friction that blocks execution
-4. **The Technology Illusion** — Deploying technology on top of broken organizational conditions
-5. **The Momentum Mirage** — The appearance of progress without actual movement
+## About This Repo
 
-These five failure modes derail organizational transformations. This research corpus documents real-world cases, quantified findings, and emerging patterns across consulting firms, academic research, and practitioner experience.
+This is a **distribution repo**: it holds only the generated HTML that Vercel deploys. All content is generated from the research index in [`research-evidence`](https://github.com/tgifriday7/research-evidence) by an automated pipeline — nothing here is edited by hand, and manual changes will be overwritten by the next deploy.
 
-## Quick Links
-
-- **Browse Evidence:** [`phase-1-dashboard/index.html`](phase-1-dashboard/index.html)
-- **View Analysis:** [`phase-2-visual/index.html`](phase-2-visual/index.html)
-
-## Context
-
-This research supports the work of Brandon Stafford on organizational transformation and AI-era org design. For more on the Five Breakpoints framework and its application, see the published papers and articles at [Brandon's Substack](https://brandonstafford.substack.com).
-
----
-
-*Last updated: July 2026
+This research supports the work of Brandon Freitag on organizational transformation and AI-era organizational design.
