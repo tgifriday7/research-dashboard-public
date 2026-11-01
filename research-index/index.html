@@ -112,7 +112,7 @@ footer a:hover{text-decoration:underline}
   <div class="hi">
     <span class="badge">Research Index</span>
     <h1>Why Change Fails</h1>
-    <p>Research Evidence Index &middot; 749 Verified Sources &middot; Updated 2026-10-31</p>
+    <p>Research Evidence Index &middot; 751 Verified Sources &middot; Updated 2026-11-01</p>
     <nav class="nav-pills">
       <a class="nav-pill active" href="#">Research Index</a>
       <a class="nav-pill" href="../visual/">Visual Dashboard</a>
@@ -125,9 +125,9 @@ footer a:hover{text-decoration:underline}
 <div class="stats">
   <div class="stat"><div class="n">5</div><div class="l">Breakpoints</div></div>
   <div class="stat"><div class="n">4</div><div class="l">Forces</div></div>
-  <div class="stat"><div class="n">546</div><div class="l">Publishers</div></div>
-  <div class="stat"><div class="n">749</div><div class="l">Sources</div></div>
-  <div class="stat"><div class="n">2245</div><div class="l">Evidence Citations</div></div>
+  <div class="stat"><div class="n">548</div><div class="l">Publishers</div></div>
+  <div class="stat"><div class="n">751</div><div class="l">Sources</div></div>
+  <div class="stat"><div class="n">2250</div><div class="l">Evidence Citations</div></div>
 </div>
 
 <main class="page">
@@ -171,7 +171,7 @@ footer a:hover{text-decoration:underline}
     <div class="bp-header">
       <span class="bp-dot" style="background:#E53E3E"></span>
       <span class="bp-title">Strategic Disconnection</span>
-      <span class="bp-count">505 sources</span>
+      <span class="bp-count">506 sources</span>
     </div>
     <div class="entry" data-category="consulting" data-title="hbr: the hidden demand for ai inside your company" data-publisher="grant thornton" data-forces="">
       <div class="entry-header">
@@ -13909,6 +13909,34 @@ footer a:hover{text-decoration:underline}
         <li>Review integration falls to 34% at firms with 10,000+ employees; 54% of leaders at non-integrating firms are opposed to integrating</li>
       </ul>
     </div>
+    <div class="entry" data-category="academic" data-title="aws well-architected framework — agentic ai lens" data-publisher="amazon web services (aws documentation — well-architected fr" data-forces="Capability,Momentum">
+      <div class="entry-header">
+        <div class="entry-title">
+          <a href="https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentic-ai-lens.html" target="_blank" rel="noopener">AWS Well-Architected Framework — Agentic AI Lens</a>
+        </div>
+        <div class="badges">
+          <span class="cat-badge cat-academic">Academic</span>
+        </div>
+      </div>
+      <div class="entry-meta">Amazon Web Services (AWS documentation — Well-Architected Fr &middot; 2026-10-31</div>
+      <div class="bp-pills">
+        <span class="bp-pill" style="background:#E53E3E22;color:#E53E3E;border:1px solid #E53E3E44">Strategic Disconnection</span>
+        <span class="rationale">The lens's first named failure mode is that "Teams define agents by what they can do rather than what they are accountable for, leaving operators without a clear way to judge whether the agent is working or to decide when to escalate." That is this breakpoint in a sentence, written by the platform vendor: a capability-defined deployment produces the appearance of a specified system while leaving the operating definition of success unfixed, so the people running it cannot tell whether it is succeeding. The remedy the spec prescribes — success criteria "stakeholders can trace back to a specific business outcome" — is the precision requirement, not the inspiration requirement.</span>
+        <span class="bp-pill" style="background:#2B549922;color:#2B5499;border:1px solid #2B549944">Process Friction</span>
+        <span class="rationale">The spec records that "Multi-agent workflows are assembled bottom-up from individual agent capabilities, without documented handoff protocols or human escalation paths, producing systems that are hard to operate when a single agent fails." The friction is the same mechanism as the retail case in the source paper — capability assembled without ownership of the end-to-end journey — now reproduced inside the agent layer, with BP02 as the explicit instruction to design the handoff rather than inherit it.</span>
+        <span class="bp-pill" style="background:#F4A26122;color:#F4A261;border:1px solid #F4A26144">Momentum Mirage</span>
+        <span class="rationale">"Success criteria and resilience metrics are tracked in silos separate from business metrics, so agent owners can't explain the business impact of a coordination failure or a drop in failure-test pass rate." This is the measurement condition that lets activity continue reporting as progress after progress has stopped: the dashboards move, the pass rates move, and nobody can connect either to an outcome. The companion failure — "Operational artifacts such as job descriptions, runbooks, and failure test scenarios are authored once and never revisited, so documented intent drifts away from actual runtime behavior" — is the same breakpoint on the governance artifacts themselves.</span>
+      </div>
+      <div class="force-pills">
+        <span class="force-pill" style="background:#00A89618;color:#00A896;border:1px solid #00A89644">Capability</span>
+        <span class="force-pill" style="background:#F4A26118;color:#F4A261;border:1px solid #F4A26144">Momentum</span>
+      </div>
+      <div class="pull-stat">The organizationally load-bearing section is AGENTOPS01: "How do you establish operational practices for agentic AI systems?", with three best practices — BP01 "Establish well-defined agent ro</div>
+      <ul class="findings">
+        <li>AWS extends its Well-Architected Framework with a lens for agentic AI, organized around the framework's six pillars (operational excellence, security, reliability, performance efficiency, cost optimiz</li>
+        <li>The lens states five properties of agentic systems that it says existing cloud and generative-AI guidance does not address: agents reason rather than only respond (one request may trigger many inf</li>
+      </ul>
+    </div>
   </div>
   <div class="breakpoint-section" data-breakpoint="incentive_fragmentation">
     <div class="bp-header">
@@ -22201,7 +22229,7 @@ footer a:hover{text-decoration:underline}
     <div class="bp-header">
       <span class="bp-dot" style="background:#2B5499"></span>
       <span class="bp-title">Process Friction</span>
-      <span class="bp-count">475 sources</span>
+      <span class="bp-count">477 sources</span>
     </div>
     <div class="entry" data-category="media" data-title="managers as the new bottleneck + agentic ai process prerequisites" data-publisher="hbr" data-forces="Capability,Commitment,Momentum">
       <div class="entry-header">
@@ -35186,12 +35214,65 @@ footer a:hover{text-decoration:underline}
         <li>Six-element escalation contract: trigger and reason (on action type, data gaps, policy conflicts, repeated tool failures and cost of error, explicitly not model confidence alone); SBAR-form context and uncertainty packet; state checkpoint (completed actions, pending steps, side effects, parallel tasks); ownership and routing with explicit acceptance by a named person; a specified human intervention; and resume / terminate / learn with the resolution logged.</li>
       </ul>
     </div>
+    <div class="entry" data-category="academic" data-title="the delegation divide: an open index of ai-agent delegability across occupations and countries" data-publisher="arxiv (econ.gn) preprint — espinal maya & jimenez londono" data-forces="Capability">
+      <div class="entry-header">
+        <div class="entry-title">
+          <a href="https://arxiv.org/abs/2610.30752" target="_blank" rel="noopener">The Delegation Divide: An Open Index of AI-Agent Delegability across Occupations and Countries</a>
+        </div>
+        <div class="badges">
+          <span class="cat-badge cat-academic">Academic</span>
+        </div>
+      </div>
+      <div class="entry-meta">arXiv (econ.GN) preprint — Espinal Maya &amp; Jimenez Londono &middot; 2026-10-31</div>
+      <div class="bp-pills">
+        <span class="bp-pill" style="background:#00A89622;color:#00A896;border:1px solid #00A89644">Technology Illusion</span>
+        <span class="rationale">Only 2.5% of world task time can be handed to an agent in full against 35.2% at least partly delegable, and two of the four barriers the authors name — accountability ('law, licence or liability requires a human to perform or sign') and trust — are legal and relational conditions no model release relaxes, so autonomy expectations rest on an organizational condition the technology does not change.</span>
+        <span class="bp-pill" style="background:#2B549922;color:#2B5499;border:1px solid #2B549944">Process Friction</span>
+        <span class="rationale">L2 partial delegation, the modal destination for delegable work, is defined as the agent running from a goal specification 'while a human still has to perform at least one essential step or review' — so delegation inserts a handoff and a review queue rather than removing one.</span>
+      </div>
+      <div class="force-pills">
+        <span class="force-pill" style="background:#00A89618;color:#00A896;border:1px solid #00A89644">Capability</span>
+      </div>
+      <div class="pull-stat">35.2% of task time in world employment is at least partly delegable to an AI agent in 2026, and only 2.5% can be handed over in full</div>
+      <ul class="findings">
+        <li>Delegable employment rises with income — 48.7% high-income, 31.0% middle-income, 22.5% low-income — a slope of 7.23pp per log point of GDP per capita (95% bootstrap 6.52-7.83); the authors attribute it to composition, since poorer countries concentrate employment where the binding barrier is physical</li>
+        <li>The preregistered adoption gap was tested and REJECTED: across 101 countries delegability and observed usage correlate r=0.86 and the standardized gap is not wider in middle-income countries (p=0.270) — 'usage so far follows the delegable task base rather than lagging behind it'</li>
+      </ul>
+    </div>
+    <div class="entry" data-category="academic" data-title="aws well-architected framework — agentic ai lens" data-publisher="amazon web services (aws documentation — well-architected fr" data-forces="Capability,Momentum">
+      <div class="entry-header">
+        <div class="entry-title">
+          <a href="https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentic-ai-lens.html" target="_blank" rel="noopener">AWS Well-Architected Framework — Agentic AI Lens</a>
+        </div>
+        <div class="badges">
+          <span class="cat-badge cat-academic">Academic</span>
+        </div>
+      </div>
+      <div class="entry-meta">Amazon Web Services (AWS documentation — Well-Architected Fr &middot; 2026-10-31</div>
+      <div class="bp-pills">
+        <span class="bp-pill" style="background:#E53E3E22;color:#E53E3E;border:1px solid #E53E3E44">Strategic Disconnection</span>
+        <span class="rationale">The lens's first named failure mode is that "Teams define agents by what they can do rather than what they are accountable for, leaving operators without a clear way to judge whether the agent is working or to decide when to escalate." That is this breakpoint in a sentence, written by the platform vendor: a capability-defined deployment produces the appearance of a specified system while leaving the operating definition of success unfixed, so the people running it cannot tell whether it is succeeding. The remedy the spec prescribes — success criteria "stakeholders can trace back to a specific business outcome" — is the precision requirement, not the inspiration requirement.</span>
+        <span class="bp-pill" style="background:#2B549922;color:#2B5499;border:1px solid #2B549944">Process Friction</span>
+        <span class="rationale">The spec records that "Multi-agent workflows are assembled bottom-up from individual agent capabilities, without documented handoff protocols or human escalation paths, producing systems that are hard to operate when a single agent fails." The friction is the same mechanism as the retail case in the source paper — capability assembled without ownership of the end-to-end journey — now reproduced inside the agent layer, with BP02 as the explicit instruction to design the handoff rather than inherit it.</span>
+        <span class="bp-pill" style="background:#F4A26122;color:#F4A261;border:1px solid #F4A26144">Momentum Mirage</span>
+        <span class="rationale">"Success criteria and resilience metrics are tracked in silos separate from business metrics, so agent owners can't explain the business impact of a coordination failure or a drop in failure-test pass rate." This is the measurement condition that lets activity continue reporting as progress after progress has stopped: the dashboards move, the pass rates move, and nobody can connect either to an outcome. The companion failure — "Operational artifacts such as job descriptions, runbooks, and failure test scenarios are authored once and never revisited, so documented intent drifts away from actual runtime behavior" — is the same breakpoint on the governance artifacts themselves.</span>
+      </div>
+      <div class="force-pills">
+        <span class="force-pill" style="background:#00A89618;color:#00A896;border:1px solid #00A89644">Capability</span>
+        <span class="force-pill" style="background:#F4A26118;color:#F4A261;border:1px solid #F4A26144">Momentum</span>
+      </div>
+      <div class="pull-stat">The organizationally load-bearing section is AGENTOPS01: "How do you establish operational practices for agentic AI systems?", with three best practices — BP01 "Establish well-defined agent ro</div>
+      <ul class="findings">
+        <li>AWS extends its Well-Architected Framework with a lens for agentic AI, organized around the framework's six pillars (operational excellence, security, reliability, performance efficiency, cost optimiz</li>
+        <li>The lens states five properties of agentic systems that it says existing cloud and generative-AI guidance does not address: agents reason rather than only respond (one request may trigger many inf</li>
+      </ul>
+    </div>
   </div>
   <div class="breakpoint-section" data-breakpoint="technology_illusion">
     <div class="bp-header">
       <span class="bp-dot" style="background:#00A896"></span>
       <span class="bp-title">Technology Illusion</span>
-      <span class="bp-count">512 sources</span>
+      <span class="bp-count">513 sources</span>
     </div>
     <div class="entry" data-category="media" data-title="managers as the new bottleneck + agentic ai process prerequisites" data-publisher="hbr" data-forces="Capability,Commitment,Momentum">
       <div class="entry-header">
@@ -49049,12 +49130,37 @@ footer a:hover{text-decoration:underline}
         <li>Six-element escalation contract: trigger and reason (on action type, data gaps, policy conflicts, repeated tool failures and cost of error, explicitly not model confidence alone); SBAR-form context and uncertainty packet; state checkpoint (completed actions, pending steps, side effects, parallel tasks); ownership and routing with explicit acceptance by a named person; a specified human intervention; and resume / terminate / learn with the resolution logged.</li>
       </ul>
     </div>
+    <div class="entry" data-category="academic" data-title="the delegation divide: an open index of ai-agent delegability across occupations and countries" data-publisher="arxiv (econ.gn) preprint — espinal maya & jimenez londono" data-forces="Capability">
+      <div class="entry-header">
+        <div class="entry-title">
+          <a href="https://arxiv.org/abs/2610.30752" target="_blank" rel="noopener">The Delegation Divide: An Open Index of AI-Agent Delegability across Occupations and Countries</a>
+        </div>
+        <div class="badges">
+          <span class="cat-badge cat-academic">Academic</span>
+        </div>
+      </div>
+      <div class="entry-meta">arXiv (econ.GN) preprint — Espinal Maya &amp; Jimenez Londono &middot; 2026-10-31</div>
+      <div class="bp-pills">
+        <span class="bp-pill" style="background:#00A89622;color:#00A896;border:1px solid #00A89644">Technology Illusion</span>
+        <span class="rationale">Only 2.5% of world task time can be handed to an agent in full against 35.2% at least partly delegable, and two of the four barriers the authors name — accountability ('law, licence or liability requires a human to perform or sign') and trust — are legal and relational conditions no model release relaxes, so autonomy expectations rest on an organizational condition the technology does not change.</span>
+        <span class="bp-pill" style="background:#2B549922;color:#2B5499;border:1px solid #2B549944">Process Friction</span>
+        <span class="rationale">L2 partial delegation, the modal destination for delegable work, is defined as the agent running from a goal specification 'while a human still has to perform at least one essential step or review' — so delegation inserts a handoff and a review queue rather than removing one.</span>
+      </div>
+      <div class="force-pills">
+        <span class="force-pill" style="background:#00A89618;color:#00A896;border:1px solid #00A89644">Capability</span>
+      </div>
+      <div class="pull-stat">35.2% of task time in world employment is at least partly delegable to an AI agent in 2026, and only 2.5% can be handed over in full</div>
+      <ul class="findings">
+        <li>Delegable employment rises with income — 48.7% high-income, 31.0% middle-income, 22.5% low-income — a slope of 7.23pp per log point of GDP per capita (95% bootstrap 6.52-7.83); the authors attribute it to composition, since poorer countries concentrate employment where the binding barrier is physical</li>
+        <li>The preregistered adoption gap was tested and REJECTED: across 101 countries delegability and observed usage correlate r=0.86 and the standardized gap is not wider in middle-income countries (p=0.270) — 'usage so far follows the delegable task base rather than lagging behind it'</li>
+      </ul>
+    </div>
   </div>
   <div class="breakpoint-section" data-breakpoint="momentum_mirage">
     <div class="bp-header">
       <span class="bp-dot" style="background:#F4A261"></span>
       <span class="bp-title">Momentum Mirage</span>
-      <span class="bp-count">451 sources</span>
+      <span class="bp-count">452 sources</span>
     </div>
     <div class="entry" data-category="consulting" data-title="hbr: the hidden demand for ai inside your company" data-publisher="grant thornton" data-forces="">
       <div class="entry-header">
@@ -61472,6 +61578,34 @@ footer a:hover{text-decoration:underline}
       <ul class="findings">
         <li>Core design claim: escalation is a transfer of work, not a routing decision, and approval checkpoints are a different operation routinely mistaken for it, producing a false sense of safety.</li>
         <li>Six-element escalation contract: trigger and reason (on action type, data gaps, policy conflicts, repeated tool failures and cost of error, explicitly not model confidence alone); SBAR-form context and uncertainty packet; state checkpoint (completed actions, pending steps, side effects, parallel tasks); ownership and routing with explicit acceptance by a named person; a specified human intervention; and resume / terminate / learn with the resolution logged.</li>
+      </ul>
+    </div>
+    <div class="entry" data-category="academic" data-title="aws well-architected framework — agentic ai lens" data-publisher="amazon web services (aws documentation — well-architected fr" data-forces="Capability,Momentum">
+      <div class="entry-header">
+        <div class="entry-title">
+          <a href="https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentic-ai-lens.html" target="_blank" rel="noopener">AWS Well-Architected Framework — Agentic AI Lens</a>
+        </div>
+        <div class="badges">
+          <span class="cat-badge cat-academic">Academic</span>
+        </div>
+      </div>
+      <div class="entry-meta">Amazon Web Services (AWS documentation — Well-Architected Fr &middot; 2026-10-31</div>
+      <div class="bp-pills">
+        <span class="bp-pill" style="background:#E53E3E22;color:#E53E3E;border:1px solid #E53E3E44">Strategic Disconnection</span>
+        <span class="rationale">The lens's first named failure mode is that "Teams define agents by what they can do rather than what they are accountable for, leaving operators without a clear way to judge whether the agent is working or to decide when to escalate." That is this breakpoint in a sentence, written by the platform vendor: a capability-defined deployment produces the appearance of a specified system while leaving the operating definition of success unfixed, so the people running it cannot tell whether it is succeeding. The remedy the spec prescribes — success criteria "stakeholders can trace back to a specific business outcome" — is the precision requirement, not the inspiration requirement.</span>
+        <span class="bp-pill" style="background:#2B549922;color:#2B5499;border:1px solid #2B549944">Process Friction</span>
+        <span class="rationale">The spec records that "Multi-agent workflows are assembled bottom-up from individual agent capabilities, without documented handoff protocols or human escalation paths, producing systems that are hard to operate when a single agent fails." The friction is the same mechanism as the retail case in the source paper — capability assembled without ownership of the end-to-end journey — now reproduced inside the agent layer, with BP02 as the explicit instruction to design the handoff rather than inherit it.</span>
+        <span class="bp-pill" style="background:#F4A26122;color:#F4A261;border:1px solid #F4A26144">Momentum Mirage</span>
+        <span class="rationale">"Success criteria and resilience metrics are tracked in silos separate from business metrics, so agent owners can't explain the business impact of a coordination failure or a drop in failure-test pass rate." This is the measurement condition that lets activity continue reporting as progress after progress has stopped: the dashboards move, the pass rates move, and nobody can connect either to an outcome. The companion failure — "Operational artifacts such as job descriptions, runbooks, and failure test scenarios are authored once and never revisited, so documented intent drifts away from actual runtime behavior" — is the same breakpoint on the governance artifacts themselves.</span>
+      </div>
+      <div class="force-pills">
+        <span class="force-pill" style="background:#00A89618;color:#00A896;border:1px solid #00A89644">Capability</span>
+        <span class="force-pill" style="background:#F4A26118;color:#F4A261;border:1px solid #F4A26144">Momentum</span>
+      </div>
+      <div class="pull-stat">The organizationally load-bearing section is AGENTOPS01: "How do you establish operational practices for agentic AI systems?", with three best practices — BP01 "Establish well-defined agent ro</div>
+      <ul class="findings">
+        <li>AWS extends its Well-Architected Framework with a lens for agentic AI, organized around the framework's six pillars (operational excellence, security, reliability, performance efficiency, cost optimiz</li>
+        <li>The lens states five properties of agentic systems that it says existing cloud and generative-AI guidance does not address: agents reason rather than only respond (one request may trigger many inf</li>
       </ul>
     </div>
   </div>
